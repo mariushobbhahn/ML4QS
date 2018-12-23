@@ -1,0 +1,42 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r, include=FALSE}
+library(tidyverse)
+library(dplyr)
+library(rstan)
+#library(rjags)
+library(plyr)
+#library(BayesFactor)
+#library(magrittr)
+library(varhandle)
+
+```
+
+```{r}
+setwd('/home/marius/Desktop/Olang_ML4QS/scratch/')
+data_3D <- read.csv("phyphox_daten_1D_z_ud.csv", header = TRUE, stringsAsFactors=FALSE)
+#head(data_3D)
+#summary(data_3D)
+
+deltas <- diff(data_3D$Time..s.)
+deltas <- c(deltas, 0)
+data_3D$deltas <- deltas
+head(data_3D)
+cumsum_x <- cumsum(cumsum(data_3D$Linear.Acceleration.x..m.s.2. * data_3D$deltas) * data_3D$deltas)
+cumsum_y <- cumsum(cumsum(data_3D$Linear.Acceleration.y..m.s.2. * data_3D$deltas) * data_3D$deltas)
+cumsum_z <- cumsum(cumsum(data_3D$Linear.Acceleration.z..m.s.2. * data_3D$deltas) * data_3D$deltas)
+
+tail(cumsum_x)
+tail(cumsum_y)
+tail(cumsum_z)
+```
+
+```{r}
+
+```
+
+
